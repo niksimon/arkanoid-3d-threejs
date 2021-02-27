@@ -1,0 +1,19 @@
+{
+  "name": "arkanoid-3d",
+  "version": "1.0.0",
+  "description": "Arkanoid 3D Three.js",
+  "private": true,
+  "scripts": {
+    "build": "parcel src/index.html"
+  },
+  "keywords": [],
+  "author": "simon",
+  "license": "ISC",
+  "dependencies": {
+    "three": "^0.126.0"
+  },
+  "devDependencies": {
+    "parcel": "^1.12.4",
+    "parcel-bundler": "^1.12.4"
+  }
+}
