@@ -58,6 +58,7 @@ document.addEventListener("keyup", handleKeyUp);
 scene.add(playerObj);
 
 // Bricks
+let bricks = [];
 const brickGeometry = new THREE.BoxGeometry(
   SETUP.BRICK_WIDTH,
   SETUP.BRICK_HEIGHT,
@@ -67,13 +68,14 @@ const brickMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 
 for (let i = 0; i < SETUP.BRICKS_ROWS; i++) {
   for (let j = 0; j < SETUP.BRICKS_COLS; j++) {
-    const brick = new THREE.Mesh(brickGeometry, brickMaterial);
-    brick.position.set(
+    const brickObj = new THREE.Mesh(brickGeometry, brickMaterial);
+    brickObj.position.set(
       j * (SETUP.BRICK_WIDTH + SETUP.BRICK_PADDING),
       0,
       i * (SETUP.BRICK_DEPTH + SETUP.BRICK_PADDING)
     );
-    scene.add(brick);
+    bricks.push(brickObj);
+    scene.add(brickObj);
   }
 }
 
@@ -114,6 +116,7 @@ camera.rotation.z = 0;
 const animate = function () {
   requestAnimationFrame(animate);
 
+  // Move player with arrow keys
   if (
     (player.isMovingLeft && playerObj.position.x >= SETUP.BOUNDARY_LEFT) ||
     (player.isMovingRight &&
@@ -123,7 +126,23 @@ const animate = function () {
     movePlayer();
   }
 
+  // Move ball
   moveBall();
+
+  // Check if ball is colliding with bricks
+  for (let i = 0; i < bricks.length; i++) {
+    let brick = bricks[i];
+    if (
+      ball.position.x <= brick.position.x + SETUP.BRICK_WIDTH &&
+      ball.position.x + 1 >= brick.position.x &&
+      ball.position.z <= brick.position.z + SETUP.BRICK_HEIGHT &&
+      ball.position.z + 1 >= brick.position.z
+    ) {
+      changeBallZDirection();
+      bricks.splice(i, 1);
+      scene.remove(brick);
+    }
+  }
 
   renderer.render(scene, camera);
 };
