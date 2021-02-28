@@ -1,5 +1,5 @@
-export const BRICKS_ROWS = 4;
-export const BRICKS_COLS = 7;
+export const BRICKS_ROWS = 5;
+export const BRICKS_COLS = 8;
 
 export const BRICK_WIDTH = 2;
 export const BRICK_HEIGHT = 1;
