@@ -7,7 +7,6 @@ export class Player {
     this.position = position;
     this.moveLeft = false;
     this.moveRight = false;
-    this._obj = null;
   }
 
   get isMovingLeft() {
